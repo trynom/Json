@@ -4,14 +4,24 @@ import java.io.*;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException {
-        CharScanner cs1;
-        cs1 = new CharScanner(new File("C:\\Users\\tal5s\\IdeaProjects\\Json\\src"));
-        BufferedReader br = new BufferedReader(new FileReader("temp.txt"));
-        String line;
-        while ((line = br.readLine()) != null) {
-            System.out.println(line);
+    public static void main( String[] args ) throws FileNotFoundException {
+        JsonBuilder avraham = null;
+        //try
+        {
+            avraham = new JsonBuilder( new File("try"));
+            System.out.println( avraham );
+            //System.out.println( avraham.get( "issue" ).get( "Ketura" ).get( 2 ) );
         }
-
-    }
-}
+//        catch( SyntaxException e )
+//        {
+//            e.printStackTrace();
+//        }
+//        //catch( QueryException e )
+//        {
+//            e.printStackTrace();
+//        }
+//        catch (FileNotFoundException e)
+//        {
+//            e.printStackTrace();
+//        }
+    }}
