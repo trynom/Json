@@ -1,6 +1,6 @@
 package com.company;
 
-//import package.CharScanner ;
+
 
 
 import java.io.File;
@@ -14,18 +14,20 @@ public class JsonBuilder extends JsonValue {
 
 
     public JsonBuilder(File f) throws FileNotFoundException {
-        sc = new CharScanner(new File("JasonInput.txt"));
+        sc = new CharScanner(f);
         this.v = parseValue();
     }
 
     public JsonValue parseValue() {
         char c; //used for isdigit function to recognize a number
-        c = sc.next();
+        c = sc.peek();
         while (sc.hasNext()) {
             if (c == '"') {
+                c=sc.next();
                 return parseString();   //["asd", 1]
             }
             if (c == '[') {
+                c=sc.next();
                 return parseArray();
             }
             if(Character.isDigit(c)){
@@ -57,14 +59,16 @@ public class JsonBuilder extends JsonValue {
             str += c;
         }
         return new JsonString(str);
-
     }
 
     public JsonNumber parseNumber () {
-
-
-
-        return null;
+        String s= "";
+        //s+= sc.next();
+        char c;
+        while(sc.hasNext() && (Character.isDigit(c=sc.next()))){
+            s += c;
+        }
+        return new JsonNumber(s);
     }
 
 

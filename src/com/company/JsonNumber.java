@@ -3,8 +3,9 @@ package com.company;
 public class JsonNumber extends JsonValue {
     private Number k;
 
-    public JsonNumber(Number k){
-        this.k= k;
+    public JsonNumber(String k){
+        int i= Integer.parseInt(k);
+        this.k=i;
     }
 
     @Override
