@@ -4,7 +4,7 @@ public class JsonNumber extends JsonValue {
     private Number k;
 
     public JsonNumber(Number k){
-        this.k= k;
+        this.k= (Number) k;
     }
 
     @Override
