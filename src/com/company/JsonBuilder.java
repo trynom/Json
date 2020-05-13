@@ -20,14 +20,12 @@ public class JsonBuilder extends JsonValue {
 
     public JsonValue parseValue() {
         char c; //used for isdigit function to recognize a number
-        c = sc.peek();
         while (sc.hasNext()) {
+            c = sc.peek();
             if (c == '"') {
-                c=sc.next();
                 return parseString();   //["asd", 1]
             }
             if (c == '[') {
-                c=sc.next();
                 return parseArray();
             }
             if(Character.isDigit(c)){
@@ -40,9 +38,11 @@ public class JsonBuilder extends JsonValue {
     public JsonArray parseArray(){
         JsonArray list = new JsonArray(); //TODO check other implementations of List
         char c;
-        while( (c = sc.next())!= ']'){
-            if ( c != ','){
-                list.add(parseValue());
+        c = sc.next();
+        while( (c = sc.peek())!= ']'){
+            list.add(parseValue());
+            if ( (c = sc.peek()) == ',') {
+                c = sc.next();
             }
         }
         return list;
@@ -54,7 +54,7 @@ public class JsonBuilder extends JsonValue {
 
     public JsonString parseString () {
         String str = "";
-        char c;
+        char c= sc.next();
         while ((c = sc.next()) != '"') {
             str += c;
         }
@@ -85,8 +85,6 @@ public class JsonBuilder extends JsonValue {
 
     @Override
     public String toString () {
-        return "JsonBuilder{" +
-                "v=" + v +
-                '}';
+        return ""+v;
     }
 }

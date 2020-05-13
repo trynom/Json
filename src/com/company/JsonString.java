@@ -19,8 +19,7 @@ public class JsonString extends JsonValue{
 
     @Override
     public String toString() {
-        return "JsonString{" +
-                "s='" + s + '\'' +
-                '}';
+        return "JsonString{\""  + s +
+                "\"}";
     }
 }
