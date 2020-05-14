@@ -21,7 +21,7 @@ public class JsonNumber extends JsonValue {
     @Override
     public String toString() {
         return "JsonNumber{" +
-                "k=" + k +
+                 k +
                 '}';
     }
 }

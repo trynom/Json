@@ -17,7 +17,7 @@ public class JsonArray extends JsonValue {
 
     @Override
     public JsonValue get(int i) {
-        return null;
+        return a.get(i);
     }
 
     @Override
@@ -27,9 +27,9 @@ public class JsonArray extends JsonValue {
 
     @Override
     public String toString() {
-        return "JsonArray{" +
-                "a=" + a +
-                '}';
+        return "JsonArray" +
+                 a;
+
     }
 }
 

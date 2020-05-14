@@ -19,42 +19,65 @@ public class JsonBuilder extends JsonValue {
     }
 
     public JsonValue parseValue() {
-        char c; //used for isdigit function to recognize a number
-        c = sc.peek();
         while (sc.hasNext()) {
+            char c = sc.peek();
             if (c == '"') {
-                c=sc.next();
                 return parseString();   //["asd", 1]
             }
             if (c == '[') {
-                c=sc.next();
                 return parseArray();
             }
             if(Character.isDigit(c)){
                 return parseNumber();
             }
-
+            if (c == '{') {
+                return parseObject();
+            }
         }
         return null;   //TODO EXCEPTION???
     }
     public JsonArray parseArray(){
         JsonArray list = new JsonArray(); //TODO check other implementations of List
-        char c;
-        while( (c = sc.next())!= ']'){
-            if ( c != ','){
-                list.add(parseValue());
+        char c = sc.next();
+        while( (c = sc.peek())!= ']'){
+            list.add(parseValue());
+            if ( (c=sc.peek())  == ',') {
+                c = sc.next();
             }
         }
+        sc.next();
         return list;
     }
 
     public JsonObject parseObject(){
+        JsonObject dic= new JsonObject();
+        char c=sc.next();
+        String key="";
+        while( (c = sc.peek())!= '}'){
+            if(c== ' ' || c== '"'){
+                c=sc.next();
+            }
+            else if((c=sc.peek())!= ':'){
 
-    return null;}
+                key+=sc.next();
+            }
+
+            else {
+                sc.next();
+                dic.put(key, parseValue()); //TODO return value from put (מצגת על אוספים)?
+                key="";
+            }
+            if ( (c = sc.peek()) == ',') {
+                c = sc.next();
+            }
+        }
+        sc.next();
+    return dic;
+    }
 
     public JsonString parseString () {
         String str = "";
-        char c;
+        char c= sc.next();
         while ((c = sc.next()) != '"') {
             str += c;
         }
@@ -65,7 +88,8 @@ public class JsonBuilder extends JsonValue {
         String s= "";
         //s+= sc.next();
         char c;
-        while(sc.hasNext() && (Character.isDigit(c=sc.next()))){
+        while(sc.hasNext() && (Character.isDigit(c=sc.peek()))){
+            c=sc.next();
             s += c;
         }
         return new JsonNumber(s);
@@ -85,8 +109,6 @@ public class JsonBuilder extends JsonValue {
 
     @Override
     public String toString () {
-        return "JsonBuilder{" +
-                "v=" + v +
-                '}';
+        return ""+v;
     }
 }
