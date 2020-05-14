@@ -19,9 +19,8 @@ public class JsonBuilder extends JsonValue {
     }
 
     public JsonValue parseValue() {
-        char c; //used for isdigit function to recognize a number
         while (sc.hasNext()) {
-            c = sc.peek();
+            char c = sc.peek();
             if (c == '"') {
                 return parseString();   //["asd", 1]
             }
@@ -31,17 +30,18 @@ public class JsonBuilder extends JsonValue {
             if(Character.isDigit(c)){
                 return parseNumber();
             }
-
+            if (c == '{') {
+                return parseObject();
+            }
         }
         return null;   //TODO EXCEPTION???
     }
     public JsonArray parseArray(){
         JsonArray list = new JsonArray(); //TODO check other implementations of List
-        char c;
-        c = sc.next();
+        char c = sc.next();
         while( (c = sc.peek())!= ']'){
             list.add(parseValue());
-            if ( (c = sc.peek()) == ',') {
+            if ( (c=sc.peek())  == ',') {
                 c = sc.next();
             }
         }
@@ -49,8 +49,24 @@ public class JsonBuilder extends JsonValue {
     }
 
     public JsonObject parseObject(){
-
-    return null;}
+        JsonObject dic= new JsonObject();
+        char c;
+        String key="";
+        while( (c = sc.peek())!= '}'){
+          if(sc.peek()!= ':'){
+                key+=sc.next();
+            }
+            else {
+                sc.next();
+                dic.put(key, parseValue()); //TODO return value from put (מצגת על אוספים)?
+                key="";
+            }
+            if ( (c = sc.peek()) == ',') {
+                c = sc.next();
+            }
+        }
+    return dic;
+    }
 
     public JsonString parseString () {
         String str = "";
@@ -65,7 +81,8 @@ public class JsonBuilder extends JsonValue {
         String s= "";
         //s+= sc.next();
         char c;
-        while(sc.hasNext() && (Character.isDigit(c=sc.next()))){
+        while(sc.hasNext() && (Character.isDigit(c=sc.peek()))){
+            c=sc.next();
             s += c;
         }
         return new JsonNumber(s);
