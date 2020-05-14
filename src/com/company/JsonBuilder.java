@@ -45,17 +45,23 @@ public class JsonBuilder extends JsonValue {
                 c = sc.next();
             }
         }
+        sc.next();
         return list;
     }
 
     public JsonObject parseObject(){
         JsonObject dic= new JsonObject();
-        char c;
+        char c=sc.next();
         String key="";
         while( (c = sc.peek())!= '}'){
-          if(sc.peek()!= ':'){
+            if(c== ' ' || c== '"'){
+                c=sc.next();
+            }
+            else if((c=sc.peek())!= ':'){
+
                 key+=sc.next();
             }
+
             else {
                 sc.next();
                 dic.put(key, parseValue()); //TODO return value from put (מצגת על אוספים)?
@@ -65,6 +71,7 @@ public class JsonBuilder extends JsonValue {
                 c = sc.next();
             }
         }
+        sc.next();
     return dic;
     }
 
