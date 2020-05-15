@@ -3,13 +3,22 @@ package com.company;
 public class JsonNumber extends JsonValue {
     private Number k;
 
-    public JsonNumber(Number k){
-        this.k= k;
+    public JsonNumber(String k) {
+        int i = Integer.parseInt(k);
+        this.k = i;
     }
 
+    public JsonNumber neg() {
+        JsonNumber negJN = new JsonNumber(String.valueOf(k.intValue() * (-1)));
+        return negJN;
+    }
+
+
     @Override
-    public JsonValue get(int i) {
-        return null;
+    public JsonNumber get(int i) {
+        Integer num = i;
+        JsonNumber jnum = new JsonNumber(num.toString());
+        return jnum;
     }
 
     @Override
@@ -19,8 +28,6 @@ public class JsonNumber extends JsonValue {
 
     @Override
     public String toString() {
-        return "JsonNumber{" +
-                "k=" + k +
-                '}';
+        return k.toString();
     }
 }

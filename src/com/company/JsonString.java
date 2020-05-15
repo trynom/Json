@@ -1,14 +1,14 @@
 package com.company;
 
-public class JsonString extends JsonValue{
+public class JsonString extends JsonValue {
     private String s;
 
-    public JsonString(String s){
-        this.s=s;
+    public JsonString(String s) {
+        this.s = s;
     }
 
     @Override
-    public JsonValue get(int i) {
+    public JsonNumber get(int i) {
         return null;
     }
 
@@ -19,8 +19,6 @@ public class JsonString extends JsonValue{
 
     @Override
     public String toString() {
-        return "JsonString{" +
-                "s='" + s + '\'' +
-                '}';
+        return s;
     }
 }
